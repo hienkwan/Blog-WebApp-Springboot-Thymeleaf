@@ -1,4 +1,4 @@
-package service;
+package com.example.blog.service;
 
 public interface CommentService {
 }
