@@ -23,15 +23,13 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ObjectId _id;
 
-    private Long id;
-
-    private String tittle;
+    private String title;
 
     private String content;
 
     private Date createdDate;
 
-    private Long userId;
+    private ObjectId userId;
 
     private Collection<Comment> comments;
 }
