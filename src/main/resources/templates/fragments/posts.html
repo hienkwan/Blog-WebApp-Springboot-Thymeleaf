@@ -10,7 +10,7 @@
             <div th:text="'Created: '+${#dates.format(post.createdDate,'dd-MMM-yyyy')}">
                 Created by
             </div>
-            <div><a>User</a>
+            <div><a th:text="${post.author}">User</a>
             </div>
         </div>
         <h3 class="panel-body" th:text="${post.content}">Body</h3>
