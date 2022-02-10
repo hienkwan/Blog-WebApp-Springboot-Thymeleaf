@@ -1,12 +1,13 @@
 package com.example.blog.util;
 
+import com.example.blog.dto.PostInfoDto;
 import com.example.blog.model.Post;
 import org.springframework.data.domain.Page;
 
 public class Pager {
-    private final Page<Post> posts;
+    private final Page<PostInfoDto> posts;
 
-    public Pager(Page<Post> posts) {
+    public Pager(Page<PostInfoDto> posts) {
         this.posts = posts;
     }
 
@@ -34,7 +35,7 @@ public class Pager {
         return posts.getTotalElements();
     }
 
-    public Page<Post> getPosts() {
+    public Page<PostInfoDto> getPosts() {
         return posts;
     }
 
