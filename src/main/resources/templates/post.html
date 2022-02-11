@@ -37,8 +37,8 @@
         <div th:text="'Created: ' + ${#dates.format(comment.commentDate, 'dd-MMM-yyyy')} + ' by '">
             Created by
         </div>
-<!--        <div><a th:text="${comment.user.username}" th:href="@{'/blog/' + ${comment.user.username}}">User</a>-->
-<!--        </div>-->
+        <div><a th:text="${comment.commentName}">User</a>
+        </div>
     </div>
 
     <!--Leave a comment button-->
