@@ -1,5 +1,6 @@
 package com.example.blog.service;
 
+import com.example.blog.exception.PostNotFoundException;
 import com.example.blog.model.Comment;
 import com.example.blog.model.Post;
 import org.bson.types.ObjectId;
@@ -12,6 +13,6 @@ public interface PostService {
 
     Optional<Post> findPostById(ObjectId id);
 
-    Post addCommentByPostId(Comment comment,ObjectId postId);
+    Post addCommentByPostId(Comment comment,String postId) throws PostNotFoundException;
 
 }

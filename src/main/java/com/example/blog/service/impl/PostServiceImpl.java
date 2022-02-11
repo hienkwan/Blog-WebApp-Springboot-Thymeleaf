@@ -1,5 +1,6 @@
 package com.example.blog.service.impl;
 
+import com.example.blog.exception.PostNotFoundException;
 import com.example.blog.model.Comment;
 import com.example.blog.model.Post;
 import com.example.blog.repository.CommentRepository;
@@ -11,15 +12,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import com.example.blog.service.PostService;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepository;
-
-    @Autowired
-    private CommentRepository commentRepository;
 
 
     @Override
@@ -33,13 +34,21 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post addCommentByPostId(Comment comment, ObjectId postId) {
-        Optional<Post> post = postRepository.findById(postId);
+    public Post addCommentByPostId(Comment comment, String postId) throws PostNotFoundException {
+        ObjectId  objectId= new ObjectId(postId);
+        Optional<Post> post = postRepository.findById(objectId);
         if(post.isPresent()){
-            post.get().getComments().add(comment);
+            comment.setCommentDate(new Date());
+            List<Comment> commentList = post.get().getComments();
+            if(commentList==null){
+                commentList = new ArrayList<>();
+            }
+            commentList.add(comment);
+            post.get().setComments(commentList);
             return postRepository.save(post.get());
+        }else{
+            throw new PostNotFoundException("Post id:"+postId+" not found");
         }
-        return null;
     }
 
     private int subtractPageByOne(int page){

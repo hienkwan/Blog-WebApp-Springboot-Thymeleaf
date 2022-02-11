@@ -1,9 +1,8 @@
 package com.example.blog.controller;
 
+import com.example.blog.exception.PostNotFoundException;
 import com.example.blog.model.Comment;
-import com.example.blog.model.Post;
 import com.example.blog.service.PostService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +16,14 @@ public class CommentController {
     @Autowired
     private PostService postService;
 
-    @PostMapping(value="/post/comment/{id}")
-    public ResponseEntity findPostById(@PathVariable String id, @RequestBody Comment comment){
-        ObjectId objectId = new ObjectId(id);
-        Post post = postService.addCommentByPostId(comment,objectId);
-        if(post!=null){
-            return ResponseEntity.status(HttpStatus.CREATED).body("Comment add sucessfull");
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment add fail");
+    @PostMapping(value = "/post/comment/{id}")
+    public ResponseEntity addCommentByPostId(@PathVariable String id, @RequestBody Comment comment) {
+        try {
+            postService.addCommentByPostId(comment, id);
+        } catch (PostNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+        return ResponseEntity.status(HttpStatus.CREATED).body("Comment add sucessfull");
+
     }
 }
