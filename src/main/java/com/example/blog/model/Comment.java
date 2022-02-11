@@ -16,16 +16,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Document(collection = "comments")
 public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private ObjectId _id;
 
     private String content;
 
     private Date commentDate;
 
-    private Long postId;
+    private String commentName;
 
 }
