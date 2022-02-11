@@ -10,8 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -31,5 +31,5 @@ public class Post {
 
     private ObjectId userId;
 
-    private Collection<Comment> comments;
+    private List<Comment> comments;
 }
