@@ -51,6 +51,11 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    @Override
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
+
     private int subtractPageByOne(int page){
         return (page < 1) ? 0 : page - 1;
     }

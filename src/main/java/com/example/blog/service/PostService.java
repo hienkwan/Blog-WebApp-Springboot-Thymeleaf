@@ -6,6 +6,7 @@ import com.example.blog.model.Post;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PostService {
@@ -14,5 +15,7 @@ public interface PostService {
     Optional<Post> findPostById(ObjectId id);
 
     Post addCommentByPostId(Comment comment,String postId) throws PostNotFoundException;
+
+    List<Post> getAllPosts();
 
 }
