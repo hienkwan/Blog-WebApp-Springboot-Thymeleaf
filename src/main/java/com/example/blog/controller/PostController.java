@@ -3,6 +3,7 @@ package com.example.blog.controller;
 import com.example.blog.dto.PostInfoDto;
 import com.example.blog.exception.PostNotFoundException;
 import com.example.blog.model.Post;
+import com.example.blog.model.User;
 import com.example.blog.service.PostService;
 import com.example.blog.service.UserService;
 import org.bson.types.ObjectId;
@@ -43,6 +44,9 @@ public class PostController {
                 .map(postMap -> convertToPostInfoDto(postMap, postMap.getUserId()))
                 .collect(Collectors.toList());
         model.addAttribute("posts", post);
+
+        List<User> users = userService.getUsers();
+        model.addAttribute("users",users);
         return "/admin/posts";
     }
 
