@@ -33,6 +33,7 @@ $(document).ready(function () {
         return formatddate;
     }
 
+    //Save edit post
     $(".save").on("click", function (e) {
         let title = $("#titleEdit").val();
         let content = $("#contentEdit").val();
@@ -47,6 +48,19 @@ $(document).ready(function () {
                 title: title, content: content, createdDate: date
             }),
             success: function (result) {
+                location.reload();
+            },
+        });
+    });
+
+    $(".delete").on("click", function (e) {
+        let id = $(this).attr("postid");
+        $.ajax({
+            url: "/post/" + id,
+            type: "DELETE",
+            contentType: "application/json;charset=utf-8",
+            success: function (result) {
+                alert("Delete successfull");
                 location.reload();
             },
         });
