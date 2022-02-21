@@ -15,4 +15,7 @@ public interface PostRepository extends MongoRepository<Post,ObjectId> {
 
     @Override
     Optional<Post> findById(ObjectId id);
+
+    void deletePostBy_id(ObjectId id);
+
 }

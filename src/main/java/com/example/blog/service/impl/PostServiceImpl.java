@@ -3,7 +3,6 @@ package com.example.blog.service.impl;
 import com.example.blog.exception.PostNotFoundException;
 import com.example.blog.model.Comment;
 import com.example.blog.model.Post;
-import com.example.blog.repository.CommentRepository;
 import com.example.blog.repository.PostRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Page<Post> findAllOrderByDatePageable(int page) {
-        return postRepository.findAllByOrderByCreatedDateDesc(PageRequest.of(subtractPageByOne(page),5));
+        return postRepository.findAllByOrderByCreatedDateDesc(PageRequest.of(subtractPageByOne(page), 5));
     }
 
     @Override
@@ -35,19 +34,19 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post addCommentByPostId(Comment comment, String postId) throws PostNotFoundException {
-        ObjectId  objectId= new ObjectId(postId);
+        ObjectId objectId = new ObjectId(postId);
         Optional<Post> post = postRepository.findById(objectId);
-        if(post.isPresent()){
+        if (post.isPresent()) {
             comment.setCommentDate(new Date());
             List<Comment> commentList = post.get().getComments();
-            if(commentList==null){
+            if (commentList == null) {
                 commentList = new ArrayList<>();
             }
             commentList.add(comment);
             post.get().setComments(commentList);
             return postRepository.save(post.get());
-        }else{
-            throw new PostNotFoundException("Post id:"+postId+" not found");
+        } else {
+            throw new PostNotFoundException("Post id:" + postId + " not found");
         }
     }
 
@@ -56,7 +55,28 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll();
     }
 
-    private int subtractPageByOne(int page){
+    @Override
+    public Post updatePostById(String id, Post postUpdate) throws PostNotFoundException {
+        ObjectId objectId = new ObjectId(id);
+        Post postToUpdate = postRepository.findById(objectId).get();
+        if (postToUpdate == null) {
+            throw new PostNotFoundException("Post id:" + id + "not found");
+        } else {
+            postToUpdate.setTitle(postUpdate.getTitle());
+            postToUpdate.setContent(postUpdate.getContent());
+            postToUpdate.setCreatedDate(postUpdate.getCreatedDate());
+            postRepository.save(postToUpdate);
+            return postToUpdate;
+        }
+    }
+
+    @Override
+    public void deletePostById(String id) {
+        ObjectId objectId = new ObjectId(id);
+        postRepository.deletePostBy_id(objectId);
+    }
+
+    private int subtractPageByOne(int page) {
         return (page < 1) ? 0 : page - 1;
     }
 }

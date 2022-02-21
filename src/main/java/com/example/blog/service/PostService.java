@@ -18,4 +18,8 @@ public interface PostService {
 
     List<Post> getAllPosts();
 
+    Post updatePostById(String id,Post postUpdate) throws PostNotFoundException;
+
+    void deletePostById(String id);
+
 }
