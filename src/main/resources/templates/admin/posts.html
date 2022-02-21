@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-body">
 
-            <!-- Modal -->
+            <!-- Modal edit -->
             <div class="modal fade" id="editPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -48,9 +48,52 @@
                     </div>
                 </div>
             </div>
+            <!-------------------------------------------------->
+            <!-- Modal create -->
+            <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Create Post</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input type="text" id="titleCreate" class="form-control title"  name="title" data-id="null" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Content</label>
+                                    <input type="text" id="contentCreate" class="form-control"  name="content" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <input type="text" id="dateCreate" class="form-control"  name="dateCreated" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Author</label>
+                                    <select th:switch="${users}" class="form-control" aria-label="Default select example">
+                                        <option th:case="null">No user</option>
+                                        <div th:case="*">
+                                            <option selected>Open this select menu</option>
+                                            <option th:each="user :${users}" th:value="${user._id}" th:text="${user.email}"> </option>
+                                        </div>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary save">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-------------------------------------->
             <div th:switch="${posts}" class="container my-5">
                 <p class="my-5">
-                    <a href="/post/create" class="btn btn-primary"><i
+                    <a class="btn btn-primary" data-toggle="modal" data-target="#createPostModal"><i
                             class="fas fa-user-plus ml-2"> Add Post</i></a>
                 </p>
                 <div id="table" class="col-md-10">
@@ -72,7 +115,7 @@
                                 <td th:text="${#dates.format(post.createdDate,'dd-MMM-yyyy')}"></td>
                                 <td th:text="${post.author}"></td>
                                 <td><a  class="btn btn-primary edit"><i class="fas fa-user-edit ml-2" data-toggle="modal" data-target="#editPostModal" ></i></a></td>
-                                <td><a th:href="@{/posts/delete/{id}(id=${post._id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+                                <td><a th:attr="postid = ${post._id}" class="btn btn-primary delete"><i class="fas fa-user-times ml-2"></i></a></td>
                             </tr>
                             </tbody>
                         </table>
