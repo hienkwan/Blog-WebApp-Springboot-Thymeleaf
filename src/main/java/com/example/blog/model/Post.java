@@ -1,5 +1,6 @@
 package com.example.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class Post {
 
     private String content;
 
+    @JsonFormat(pattern="MM-dd-yyyy")
     private Date createdDate;
 
     private ObjectId userId;
