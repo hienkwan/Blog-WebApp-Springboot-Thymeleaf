@@ -34,7 +34,7 @@ $(document).ready(function () {
     }
 
     //Save edit post
-    $(".save").on("click", function (e) {
+    $(".saveEdit").on("click", function (e) {
         let title = $("#titleEdit").val();
         let content = $("#contentEdit").val();
         let date = parseDate($("#dateEdit").val());
@@ -59,8 +59,26 @@ $(document).ready(function () {
             url: "/post/" + id,
             type: "DELETE",
             contentType: "application/json;charset=utf-8",
+            success: function () {
+                location.reload();
+            },
+        });
+    });
+
+    $(".saveCreate").on("click", function (e) {
+        let title = $("#titleCreate").val();
+        let content = $("#contentCreate").val();
+        let date = parseDate($("#dateCreate").val());
+        let id = $("#userId").val();
+
+        $.ajax({
+            url: "/post",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                title: title, content: content, createdDate: date,userId:id
+            }),
             success: function (result) {
-                alert("Delete successfull");
                 location.reload();
             },
         });
