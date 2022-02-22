@@ -22,4 +22,6 @@ public interface PostService {
 
     void deletePostById(String id);
 
+    Post createPost(Post post);
+
 }

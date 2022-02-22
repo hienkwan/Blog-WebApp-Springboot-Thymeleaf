@@ -62,8 +62,9 @@ public class PostController {
     }
 
     @DeleteMapping(value = "/post/{id}")
-    public void deletePost(@PathVariable String id) {
+    public ResponseEntity deletePost(@PathVariable String id) {
         postService.deletePostById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Delete succesful");
     }
 
     private PostInfoDto convertToPostInfoDto(Post post, ObjectId id) {
@@ -73,5 +74,17 @@ public class PostController {
         return postInfoDto;
     }
 
+    @PostMapping(value = "/post")
+    public ResponseEntity<String> createPost(@RequestBody Post postCreate) {
+        Post post;
+//        ObjectId objectId = new ObjectId(id);
+//        postCreate.setUserId(objectId);
+        post = postService.createPost(postCreate);
+        if(post!=null){
+            return new ResponseEntity<>(post.toString(),HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Create fail",HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

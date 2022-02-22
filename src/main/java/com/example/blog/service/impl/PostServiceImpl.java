@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.blog.service.PostService;
 
@@ -74,6 +75,12 @@ public class PostServiceImpl implements PostService {
     public void deletePostById(String id) {
         ObjectId objectId = new ObjectId(id);
         postRepository.deletePostBy_id(objectId);
+    }
+
+    @Override
+    public Post createPost(Post post) {
+        Post newPost = postRepository.save(post);
+        return newPost;
     }
 
     private int subtractPageByOne(int page) {
