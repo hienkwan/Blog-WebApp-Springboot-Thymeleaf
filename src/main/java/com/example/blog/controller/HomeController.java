@@ -10,6 +10,8 @@ import org.bson.types.ObjectId;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +33,12 @@ public class HomeController {
     public String index(@RequestParam(defaultValue = "0") int page, Model model){
         System.out.println("home page");
         Page<PostInfoDto> posts = postService.findAllOrderByDatePageable(page).map((post)-> convertToPostInfoDto(post,post.getUserId()));
-
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails)principal).getUsername();
+        } else {
+            String username = principal.toString();
+        }
 
         //return postInfoDto;
         Pager pager = new Pager(posts);

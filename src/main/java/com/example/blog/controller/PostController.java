@@ -50,7 +50,7 @@ public class PostController {
         return "/admin/posts";
     }
 
-    @PutMapping(value = "/post/{id}")
+    @PutMapping(value = "/admin/post/{id}")
     public ResponseEntity<String> updatePost(@PathVariable String id, @RequestBody Post postUpdate) {
         Post post;
         try {
@@ -61,7 +61,7 @@ public class PostController {
         }
     }
 
-    @DeleteMapping(value = "/post/{id}")
+    @DeleteMapping(value = "/admin/post/{id}")
     public ResponseEntity deletePost(@PathVariable String id) {
         postService.deletePostById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Delete succesful");
@@ -74,7 +74,7 @@ public class PostController {
         return postInfoDto;
     }
 
-    @PostMapping(value = "/post")
+    @PostMapping(value = "/admin/post")
     public ResponseEntity<String> createPost(@RequestBody Post postCreate) {
         Post post;
 //        ObjectId objectId = new ObjectId(id);

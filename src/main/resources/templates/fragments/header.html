@@ -1,5 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <head>
     <div th:fragment="header-css" th:remove="tag">
 
@@ -10,11 +10,15 @@
               rel="stylesheet" media="screen"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 
-        <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
-                th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
-
         <link rel="stylesheet" th:href="@{/css/main.css}"
               />
+<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+<!--        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">-->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+
+<!--        <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">-->
+<!--        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+<!--        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     </div>
 </head>
 <body>
@@ -27,11 +31,11 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse navbar-right">
                 <!-- show registration only if user is not yet authenticated -->
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav"  sec:authorize=”isAuthenticated()”>
                     <li class="active"><a>Registration</a></li>
                 </ul>
                 <!-- show login only if user is not yet authenticated -->
-                <ul class="nav navbar-nav" >
+                <ul class="nav navbar-nav"  sec:authorize=”!isAuthenticated()”>
                     <li class="active"><a >Login</a></li>
                 </ul>
                 <!-- show My Blog only if user is authenticated -->
@@ -43,7 +47,7 @@
                     <li class="active"><a >New Post</a></li>
                 </ul>
                 <!-- show sign out only if user is authenticated -->
-                <ul class="nav navbar-nav" >
+                <ul class="nav navbar-nav"  sec:authorize=”isAuthenticated()”>
                     <li class="active"><a >Sign Out</a></li>
                 </ul>
             </div>

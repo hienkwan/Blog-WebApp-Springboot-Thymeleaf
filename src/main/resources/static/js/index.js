@@ -41,7 +41,7 @@ $(document).ready(function () {
         let id = $(".title").attr("data-id");
 
         $.ajax({
-            url: "/post/" + id,
+            url: "/admin/post/" + id,
             type: "PUT",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({
@@ -56,7 +56,7 @@ $(document).ready(function () {
     $(".delete").on("click", function (e) {
         let id = $(this).attr("postid");
         $.ajax({
-            url: "/post/" + id,
+            url: "/admin/post/" + id,
             type: "DELETE",
             contentType: "application/json;charset=utf-8",
             success: function () {
@@ -72,7 +72,7 @@ $(document).ready(function () {
         let id = $("#userId").val();
 
         $.ajax({
-            url: "/post",
+            url: "/admin/post",
             type: "POST",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({

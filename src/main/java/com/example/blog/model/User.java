@@ -10,13 +10,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import java.io.Serializable;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Document(collection = "users")
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ObjectId _id;
