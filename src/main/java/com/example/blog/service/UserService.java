@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface UserService {
     List<User> getUsers();
     Optional<User> getUserById(ObjectId id);
+    User signUpUser(User user);
 }
