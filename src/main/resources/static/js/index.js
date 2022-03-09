@@ -9,6 +9,7 @@ $(document).ready(function () {
         $("#contentEdit").val(currow.find("td:eq(1)").text());
         $("#dateEdit").val(currow.find("td:eq(2)").text());
         $("#authorEdit").val(currow.find("td:eq(3)").text());
+        $("#userIdEdit select").val(currow.find("td:eq(3)").text());
         id = currow.find("td:eq(0)").attr("postid");
         $(".title").attr("data-id", id);
 
@@ -39,13 +40,14 @@ $(document).ready(function () {
         let content = $("#contentEdit").val();
         let date = parseDate($("#dateEdit").val());
         let id = $(".title").attr("data-id");
+        let userId=$("#userIdEdit").val();
 
         $.ajax({
             url: "/admin/post/" + id,
             type: "PUT",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({
-                title: title, content: content, createdDate: date
+                title: title, content: content, createdDate: date,userId:userId
             }),
             success: function (result) {
                 location.reload();

@@ -33,14 +33,13 @@ public class HomeController {
     public String index(@RequestParam(defaultValue = "0") int page, Model model){
         System.out.println("home page");
         Page<PostInfoDto> posts = postService.findAllOrderByDatePageable(page).map((post)-> convertToPostInfoDto(post,post.getUserId()));
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            String username = ((UserDetails)principal).getUsername();
-        } else {
-            String username = principal.toString();
-        }
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if (principal instanceof UserDetails) {
+//            String username = ((UserDetails)principal).getUsername();
+//        } else {
+//            String username = principal.toString();
+//        }
 
-        //return postInfoDto;
         Pager pager = new Pager(posts);
         model.addAttribute("pager",pager);
         return "/home";

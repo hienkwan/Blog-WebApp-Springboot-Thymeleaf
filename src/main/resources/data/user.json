@@ -2,12 +2,12 @@
 [
   {
     "email": "adam@gmail.com",
-    "password": "123456",
+    "password": "$2a$10$VSwXiN/LpUmxIOE7n1fBX.cc4x/ktFg9atWS75hc7/UKTYiUfeGeG",
     "role": 1
   },
   {
     "email": "eva@gmail.com",
-    "password": "123456",
+    "password": "$2a$10$VSwXiN/LpUmxIOE7n1fBX.cc4x/ktFg9atWS75hc7/UKTYiUfeGeG",
     "role": 1
   }
 

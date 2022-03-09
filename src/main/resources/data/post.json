@@ -1,12 +1,12 @@
 [
   {
-    "tittle": "post 1",
+    "title": "post 1",
     "content": "this is post 1",
     "createdDate": "01/01/2020",
     "userId":{"$oid":"61f3e74ac3b4aa3cc3d2fce1"}
   },
   {
-    "tittle": "post 2",
+    "title": "post 2",
     "content": "this is post 2",
     "createdDate": "02/02/2021",
     "userId":{"$oid":"61f3e74ac3b4aa3cc3d2fce1"}

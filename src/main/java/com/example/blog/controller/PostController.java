@@ -38,7 +38,7 @@ public class PostController {
         return "/post";
     }
 
-    @GetMapping(value = "/management/posts")
+    @GetMapping(value = "/admin/posts")
     public String getAllPosts(Model model) {
         List<PostInfoDto> post = postService.getAllPosts().stream()
                 .map(postMap -> convertToPostInfoDto(postMap, postMap.getUserId()))

@@ -23,10 +23,10 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin@gmail.com")
-                .password(passwordEncoder().encode("123456"))
-                .roles("ADMIN");
+//        auth.inMemoryAuthentication()
+//                .withUser("admin@gmail.com")
+//                .password(passwordEncoder().encode("123456"))
+//                .roles("ADMIN");
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
@@ -39,7 +39,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**","/js/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/login**").permitAll()
+                .antMatchers("/login**","/home**","/signup**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
@@ -57,7 +57,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
         final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver);
-        templateEngine.addDialect(sec); // Enable use of "sec"
+        templateEngine.addDialect(new SpringSecurityDialect()); // Enable use of "sec"
         return templateEngine;
     }
 
