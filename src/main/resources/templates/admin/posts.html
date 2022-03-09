@@ -38,6 +38,12 @@
                                     <div class="form-group">
                                         <label>Author</label>
                                         <input type="text" class="form-control" id="authorEdit" name="author" >
+                                        <select id="userIdEdit" th:switch="${users}" class="form-control" aria-label="Default select example">
+                                            <option th:case="null" >No user</option>
+                                            <div th:case="*">
+                                                <option th:each="user :${users}" th:value="${user._id}" th:text="${user.email}"> </option>
+                                            </div>
+                                        </select>
                                     </div>
                                 </div>
                             </form>
@@ -76,7 +82,6 @@
                                     <select id="userId" th:switch="${users}" class="form-control" aria-label="Default select example">
                                         <option th:case="null" >No user</option>
                                         <div th:case="*">
-                                            <option selected>Open this select menu</option>
                                             <option th:each="user :${users}" th:value="${user._id}" th:text="${user.email}"> </option>
                                         </div>
                                     </select>
