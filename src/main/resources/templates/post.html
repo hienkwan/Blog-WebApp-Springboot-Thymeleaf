@@ -28,17 +28,28 @@
 <!--            </div>-->
 <!--        </div>-->
     </div>
+    <form method="post" th:action="@{/post/comment/{id}(id=${post._id})}">
+        <h2>Comments:</h2>
+        <div class="bg-light p-2">
+            <label>Author</label>
+            <input type="text" class="form-control" id="authorEdit" name="commentName" >
+            <label>Comment</label>
+            <div class="d-flex flex-row align-items-start"><textarea class="form-control ml-1 shadow-none textarea" type="text" name="content"></textarea></div>
+            <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" type="submit">Post comment</button><button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button></div>
+        </div>
+    </form>
 
-    <h2>Comments:</h2>
 
     <!--Comments-->
     <div class="well" th:each="comment : ${post.comments}">
+        <label>Created date :</label>
+        <label th:text="${#dates.format(comment.commentDate, 'dd-MMM-yyyy')}">
+        </label>
+        <div>
+            <label>Created by :</label>
+            <a th:text="${comment.commentName}">User</a>
+        </div>
         <h3 th:text="${comment.content}">Body</h3>
-        <div th:text="'Created: ' + ${#dates.format(comment.commentDate, 'dd-MMM-yyyy')} + ' by '">
-            Created by
-        </div>
-        <div><a th:text="${comment.commentName}">User</a>
-        </div>
     </div>
 
     <!--Leave a comment button-->
@@ -54,6 +65,8 @@
 <!-- /.container -->
 
 <div th:replace="/fragments/footer :: footer"/>
+<script>
 
+</script>
 </body>
 </html>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CommentController {
@@ -17,13 +18,17 @@ public class CommentController {
     private PostService postService;
 
     @PostMapping(value = "/post/comment/{id}")
-    public ResponseEntity addCommentByPostId(@PathVariable String id, @RequestBody Comment comment) {
+    public String addCommentByPostId(@PathVariable String id, @RequestParam String content,@RequestParam String commentName) {
+        Comment comment = Comment.builder()
+                .commentName(commentName)
+                .content(content)
+                .build();
         try {
             postService.addCommentByPostId(comment, id);
         } catch (PostNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return null;
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body("Comment add sucessfull");
+        return "redirect:/post/"+id;
 
     }
 }
