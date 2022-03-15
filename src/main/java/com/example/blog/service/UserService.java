@@ -10,4 +10,5 @@ public interface UserService {
     List<User> getUsers();
     Optional<User> getUserById(ObjectId id);
     User signUpUser(User user);
+    Optional<User> findUserByEmail(String email);
 }
