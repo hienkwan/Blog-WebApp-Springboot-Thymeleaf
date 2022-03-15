@@ -6,6 +6,7 @@ import com.example.blog.model.Post;
 import com.example.blog.model.User;
 import com.example.blog.service.PostService;
 import com.example.blog.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.bson.types.ObjectId;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.security.Principal;
 
 @Controller
 public class PostController {
@@ -74,16 +79,29 @@ public class PostController {
         return postInfoDto;
     }
 
-    @PostMapping(value = "/admin/post")
-    public ResponseEntity<String> createPost(@RequestBody Post postCreate) {
-        Post post;
-//        ObjectId objectId = new ObjectId(id);
-//        postCreate.setUserId(objectId);
-        post = postService.createPost(postCreate);
-        if(post!=null){
-            return new ResponseEntity<>(post.toString(),HttpStatus.OK);
+    @GetMapping(value = "/newPost")
+    public String createPostPage(Model model,Principal principal) throws  JsonProcessingException {
+        Optional<User> user = userService.findUserByEmail(principal.getName());
+        if(user.isPresent()){
+            Post post =new Post();
+            model.addAttribute("post",post);
+            post.setUserId(user.get().get_id());
+            return "/admin/postForm";
         }else{
-            return new ResponseEntity<>("Create fail",HttpStatus.BAD_REQUEST);
+            return "/error";
+        }
+    }
+
+    @PostMapping(value = "/admin/newPost")
+    public String createPost(@ModelAttribute Post post,  BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
+            return "/admin/postForm";
+        }else{
+            post.setCreatedDate(new Date());
+            postService.createPost(post);
+
+            return "redirect:/home";
         }
     }
 
