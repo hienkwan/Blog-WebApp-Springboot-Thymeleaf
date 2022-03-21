@@ -11,4 +11,7 @@ public interface UserService {
     Optional<User> getUserById(ObjectId id);
     User signUpUser(User user);
     Optional<User> findUserByEmail(String email);
+    User updateUser(User user);
+
+    void createPasswordResetTokenForUser(Optional<User> user, String token);
 }

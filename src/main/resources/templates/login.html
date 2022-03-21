@@ -32,9 +32,9 @@
         </button>
     </form>
 
-    <form action="/reset/password/" class="form-reset">
-        <input type="email" id="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-        <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
+    <form th:action="@{/resetPassword}" class="form-reset">
+        <input type="email" id="resetEmail" name="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+        <button class="btn btn-primary btn-block" id="btn-reset" type="submit">Reset Password</button>
         <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> Back</a>
     </form>
 
@@ -115,6 +115,22 @@ $(()=>{
                 e.preventDefault();
                 alert("Password not match!");
             }
+        })
+
+        $('#btn-reset').on('click',function (e) {
+            e.preventDefault();
+            let resetEmail = $("#resetEmail").val();
+            console.log("reset Email "+resetEmail);
+            $.ajax({
+                url: "/resetPassword",
+                type: "POST",
+                data: {
+                  email:resetEmail
+                },
+                success: function (result) {
+                    console.log(result)
+                },
+            });
         })
 
     })
